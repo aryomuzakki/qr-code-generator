@@ -1,3 +1,40 @@
+# QR Code Generator
+
+- ### Generate QR Code with Color/Shape Styling, and add Logo Icon.
+- ### Scan QR Code with Device Camera
+
+---
+
+### Feature
+
+Generate QR Code
+
+- [x] Download as SVG
+- [x] Download as PNG
+- [x] Edit Foreground/Dots Color
+- [ ] Edit Corners Frame Color
+- [ ] Edit Corners Eye Color
+- [ ] Edit Dots Shape
+- [ ] Edit Corners Frame Shape
+- [ ] Edit Corners Eye Shape
+- [ ] Add Logo Icon
+- [ ] Edit Logo Size
+- [ ] Edit Logo Margin
+- [ ] Edit QR Margin (Quiet Zone)
+- [ ] Edit Downloaded Size
+- [ ] Edit Error Correction Level
+
+Scan QR Code
+
+- [x] Toggle Scanner On/Off
+- [x] Toggle Flashlight On/Off
+- [x] Copy Result
+- [x] Open Link in New Tab if Result is a Link
+- [x] Switch Camera Rear or Front
+- [ ] Upload QR from Image File
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -15,8 +52,6 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
