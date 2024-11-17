@@ -1,6 +1,7 @@
 {
   "name": "QR Code Generator",
   "short_name": "QR Code Generator",
+  "description": "Create QR Code Easily",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -17,5 +18,7 @@
   ],
   "theme_color": "#1071cc",
   "background_color": "#1071cc",
-  "display": "standalone"
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/"
 }

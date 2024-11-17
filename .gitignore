@@ -20,6 +20,9 @@
 # production
 /build
 
+# service worker
+sw*.js
+
 # misc
 .DS_Store
 *.pem

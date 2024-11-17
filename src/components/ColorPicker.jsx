@@ -42,7 +42,7 @@ const ColorPicker = forwardRef(
               }}
               variant='outline'
             >
-              <Edit2Icon className="text-muted dark:text-foreground"/>
+              <Edit2Icon className="text-muted dark:text-foreground" />
             </Button>
           </PopoverTrigger>
           <Input
@@ -57,6 +57,16 @@ const ColorPicker = forwardRef(
         </div>
         <PopoverContent className='w-full'>
           <HexColorPicker color={parsedValue} onChange={onChange} />
+          <div className="w-[200px] mt-4">
+            <Input
+              maxLength={7}
+              onChange={(e) => {
+                onChange(e?.currentTarget?.value);
+              }}
+              ref={ref}
+              value={parsedValue}
+            />
+          </div>
         </PopoverContent>
       </Popover>
     );

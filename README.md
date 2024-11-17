@@ -7,6 +7,8 @@
 
 ### Feature
 
+- [x] PWA Offline Support
+
 Generate QR Code
 
 - [x] Download as SVG
@@ -28,8 +30,7 @@ Scan QR Code
 
 - [x] Toggle Scanner On/Off
 - [x] Toggle Flashlight On/Off
-- [x] Copy Result
-- [x] Open Link in New Tab if Result is a Link
+- [x] Copy Result & Open Link in New Tab if Result is a Link
 - [x] Switch Camera Rear or Front
 - [ ] Upload QR from Image File
 

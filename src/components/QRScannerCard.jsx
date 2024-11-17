@@ -59,6 +59,7 @@ export default function QRScannerCard() {
         QRScannerObj.destroy()
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const startScanning = async () => {
@@ -110,6 +111,7 @@ export default function QRScannerCard() {
     if (QRScannerObj) {
       startScanning();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [QRScannerObj])
 
   const toggleScanning = async () => {
