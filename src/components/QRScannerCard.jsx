@@ -59,6 +59,7 @@ export default function QRScannerCard() {
         QRScannerObj.destroy()
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const startScanning = async () => {
@@ -110,6 +111,7 @@ export default function QRScannerCard() {
     if (QRScannerObj) {
       startScanning();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [QRScannerObj])
 
   const toggleScanning = async () => {
@@ -160,7 +162,7 @@ export default function QRScannerCard() {
   }
 
   return (
-    <div className="flex flex-col -mb-2">
+    <div className="flex flex-col">
       <Card className="flex-grow relative overflow-hidden border-0 border-none rounded-none">
         <CardHeader className="absolute top-0 left-0 right-0 z-10 bg-background border rounded-b-xl py-2.5">
           <div className="flex justify-between items-center">

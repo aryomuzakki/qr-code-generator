@@ -62,6 +62,7 @@ export default function QRGeneratorCard() {
       console.log(err);
       toast.error("Error trying to generate QR Code. Please check input data or other settings");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -120,7 +121,7 @@ export default function QRGeneratorCard() {
             <div className="space-y-2">
               <div className="relative">
                 <Label htmlFor="qrInput">Data</Label>
-                <p className={`absolute text-muted-foreground text-right text-xs right-0.5 bottom-0 ${characterCount < 8 ? "text-red-600" : ""}`}>{characterCount}</p>
+                <p className={`absolute text-muted-foreground text-right text-xs right-0.5 bottom-0 ${characterCount < 8 || characterCount > 1273 ? "text-red-600" : ""}`}>{characterCount}</p>
               </div>
               <Input
                 type="text"
@@ -131,9 +132,24 @@ export default function QRGeneratorCard() {
                   setInputText(e.target.value);
                   setCharacterCount(e.target.value.length);
                 }}
-                placeholder="Hello QR"
-                className="w-full"
+                placeholder="Type here ..."
+                className={`w-full ${characterCount === 0 && "ring-1 ring-red-600/70 focus-visible:ring-red-600/70"} ${characterCount > 0 && characterCount < 8 && "ring-1 ring-red-600/70 focus-visible:ring-red-600/70"}`}
               />
+              {characterCount === 0 && (
+                <p className="text-red-700 dark:text-red-400 text-xs font-semibold dark:font-light h-0 !mt-1">
+                  Required
+                </p>
+              )}
+              {characterCount > 0 && characterCount < 8 && (
+                <p className="text-red-700 dark:text-red-400 text-xs font-semibold dark:font-light h-0 !mt-1">
+                  Minimum 8 character
+                </p>
+              )}
+              {characterCount > 1273 && (
+                <p className="text-red-700 dark:text-red-400 text-xs font-semibold dark:font-light h-0 !mt-1">
+                  Maximum 1273 character
+                </p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="dotsColor">Foreground Color</Label>
@@ -169,14 +185,14 @@ export default function QRGeneratorCard() {
           <Button type="button" className="w-full" onClick={generateQRCode}>Generate QR Code</Button>
         </CardHeader>
         <CardContent className="flex flex-col items-center space-y-4">
-          <div className="flex justify-center items-center">
-            <div className="w-full h-full [&_svg]:w-full [&_svg]:h-full overflow-hidden rounded" ref={QRRef} />
+          <div className="flex justify-center items-center w-full aspect-square">
+            <div className="w-full h-full [&_svg]:w-full [&_svg]:h-full overflow-hidden bg-muted rounded" ref={QRRef} />
           </div>
           <div className="flex flex-wrap justify-around gap-4 w-full">
-            <Button onClick={() => downloadQRCode('svg')}>
+            <Button onClick={() => downloadQRCode('svg')} {...QRRef.current ? {} : { disabled: "disabled" }}>
               <Download className="mr-1 h-4 w-4" />Download SVG
             </Button>
-            <Button onClick={() => downloadQRCode('png')}>
+            <Button onClick={() => downloadQRCode('png')} {...QRRef.current ? {} : { disabled: "disabled" }}>
               <Download className="mr-1 h-4 w-4" />Download PNG
             </Button>
           </div>
