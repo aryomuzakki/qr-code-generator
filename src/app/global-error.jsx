@@ -35,13 +35,13 @@ const GlobalErrorPage = ({ error, reset }) => {
         <WithNextTheme>
           <div className="min-h-dvh flex flex-col relative">
             <main className="flex-grow">
-              <div className="p-8">
+              <div className="p-8 flex justify-center">
                 <Card className="w-max max-w-full bg-destructive">
                   <CardHeader>
                     <CardTitle className="font-bold text-2xl">Something wrong</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
+                    <div className="space-y-4 flex flex-col items-center">
                       <div className="flex flex-wrap items-center gap-2">
                         <Button variant="" onClick={() => reset()}>RESET Page</Button>
                         <p className="text-xs">or</p>

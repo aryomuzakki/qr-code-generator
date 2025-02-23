@@ -34,13 +34,14 @@ const ColorPicker = forwardRef(
               {...props}
               id={props.id + "-btn"}
               name={name + "-btn"}
-              className={cn('flex items-center justify-center hover:opacity-75 mr-2', className)}
+              className={cn(`flex items-center justify-center mr-2 bg-[var(--colorpicker-bg-color)] hover:bg-[var(--colorpicker-transbg-color)]`, className)}
               onClick={() => {
                 setOpen(true);
               }}
               size='icon'
               style={{
-                backgroundColor: parsedValue,
+                "--colorpicker-bg-color": parsedValue,
+                "--colorpicker-transbg-color": parsedValue + "bf",
               }}
               variant='outline'
             >

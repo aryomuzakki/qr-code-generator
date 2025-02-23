@@ -7,13 +7,13 @@ const ErrorPage = ({ error, reset }) => {
   console.log(error);
 
   return (
-    <div className="p-8">
+    <div className="p-8 flex justify-center">
       <Card className="w-max max-w-full bg-destructive">
         <CardHeader>
-          <CardTitle className="font-bold text-2xl">Something wrong</CardTitle>
+          <CardTitle className="font-bold text-2xl">Something wrong!</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="space-y-4 flex flex-col items-center">
             <div className="flex flex-col gap-2 w-max">
               <Button variant="" onClick={() => reset()}>RESET Page</Button>
               <p className="text-xs w-full text-center">or</p>
