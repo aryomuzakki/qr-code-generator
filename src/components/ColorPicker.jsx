@@ -11,11 +11,15 @@ import {
 } from '@/components/ui/popover';
 import { Input } from '@/components/ui/input';
 import useForwardedRef from '@/lib/useForwardedRef';
-import { Edit2Icon, EditIcon } from 'lucide-react';
+import { Edit2Icon } from 'lucide-react';
+
+const lightDark = (color, amount) => {
+  return '#' + color.replace(/^#/, '').replace(/../g, color => ('0' + Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substring(-2));
+}
 
 const ColorPicker = forwardRef(
   (
-    { disabled, value, onChange, onBlur, name, className, ...props },
+    { label, disabled, value, onChange, onBlur, name, className, ...props },
     forwardedRef
   ) => {
     const ref = useForwardedRef(forwardedRef);
@@ -31,21 +35,26 @@ const ColorPicker = forwardRef(
           <PopoverTrigger asChild disabled={disabled} onBlur={onBlur}>
             <Button
               {...props}
-              className={cn('flex items-center justify-center hover:opacity-75 mr-2', className)}
-              name={name}
+              id={props.id + "-btn"}
+              name={name + "-btn"}
+              className={cn(`flex items-center justify-center mr-2 bg-[var(--colorpicker-bg-color)] hover:bg-accent/25 text-muted dark:text-foreground hover:text-primary hover:dark:text-primary`, className)}
               onClick={() => {
                 setOpen(true);
               }}
               size='icon'
               style={{
-                backgroundColor: parsedValue,
+                "--colorpicker-bg-color": parsedValue,
               }}
               variant='outline'
             >
-              <Edit2Icon className="text-muted dark:text-foreground"/>
+              <span className="sr-only">Color Picker</span>
+              <Edit2Icon className="" />
             </Button>
           </PopoverTrigger>
           <Input
+            disabled={disabled}
+            id={props.id}
+            name={props.name}
             maxLength={7}
             onChange={(e) => {
               onChange(e?.currentTarget?.value);
@@ -57,6 +66,18 @@ const ColorPicker = forwardRef(
         </div>
         <PopoverContent className='w-full'>
           <HexColorPicker color={parsedValue} onChange={onChange} />
+          <div className="w-[200px] mt-4">
+            <Input
+              id={props.id + "-popover"}
+              name={props.name + "-popover"}
+              maxLength={7}
+              onChange={(e) => {
+                onChange(e?.currentTarget?.value);
+              }}
+              ref={ref}
+              value={parsedValue}
+            />
+          </div>
         </PopoverContent>
       </Popover>
     );

@@ -7,31 +7,38 @@
 
 ### Feature
 
+- [x] PWA Support
+
 Generate QR Code
 
 - [x] Download as SVG
 - [x] Download as PNG
+- [x] Edit Background Color
 - [x] Edit Foreground/Dots Color
-- [ ] Edit Corners Frame Color
-- [ ] Edit Corners Eye Color
-- [ ] Edit Dots Shape
-- [ ] Edit Corners Frame Shape
-- [ ] Edit Corners Eye Shape
-- [ ] Add Logo Icon
-- [ ] Edit Logo Size
-- [ ] Edit Logo Margin
-- [ ] Edit QR Margin (Quiet Zone)
-- [ ] Edit Downloaded Size
-- [ ] Edit Error Correction Level
+- [ ] Edit Corners Frame Color (*Require a workaround*)
+- [ ] Edit Corners Eye Color (*Require a workaround*)
+- [x] Edit Dots Shape
+- [x] Edit Corners Frame Shape
+- [x] Edit Corners Eye Shape
+- [x] Add Logo Icon
+- [x] Edit Logo Size
+- [x] Edit Logo Margin
+- [x] Edit QR Margin (Quiet Zone)
+- [x] Edit Downloaded Size
+- [x] Edit Error Correction Level
+- [ ] Data Template:
+  - [ ] vCard
+  - [ ] Wifi
+  - [ ] Whatsapp
 
 Scan QR Code
 
 - [x] Toggle Scanner On/Off
 - [x] Toggle Flashlight On/Off
-- [x] Copy Result
-- [x] Open Link in New Tab if Result is a Link
+- [x] Copy Result & Open Link in New Tab if Result is a Link
 - [x] Switch Camera Rear or Front
-- [ ] Upload QR from Image File
+- [x] Upload QR Image from Native File Storage
+- [ ] Upload QR Image from URL
 
 ---
 
