@@ -16,44 +16,83 @@ import { Slider } from "./ui/slider";
 import { ScrollArea } from "./ui/scroll-area";
 import { Textarea } from "./ui/textarea";
 import { Separator } from "./ui/separator";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./ui/select";
+
+const ERROR_CORRECTION_OPTIONS = {
+  "L": "Low",
+  "M": "Medium",
+  "Q": "Quartile",
+  "H": "High",
+}
+
+const DOTS_OPTIONS = {
+  "square": "Square",
+  "rounded": "Rounded",
+  "extra-rounded": "Extra-Rounded",
+  "dots": "Dots",
+  "classy": "Classy",
+  "classy-rounded": "Classy-Rounded",
+}
+
+const CORNER_SQUARE_OPTIONS = {
+  "square": "Square",
+  "rounded": "Rounded",
+  "extra-rounded": "Extra-Rounded",
+  "dot": "Dot",
+  "dots": "Dots",
+  "classy": "Classy",
+  "classy-rounded": "Classy-Rounded",
+}
+
+const CORNER_DOT_OPTIONS = {
+  "square": "Square",
+  "rounded": "Rounded",
+  "extra-rounded": "Extra-Rounded",
+  "dot": "Dot",
+  "dots": "Dots",
+  "classy": "Classy",
+  "classy-rounded": "Classy-Rounded",
+}
+
+const QR_DEFAULT_OPTIONS = {
+  width: 400,
+  height: 400,
+  type: 'svg',
+  data: 'Hello QR',
+  image: '/assets/img/R logo no outline.png',
+  margin: 20,
+  qrOptions: {
+    typeNumber: 0,
+    mode: 'Byte',
+    errorCorrectionLevel: 'H',
+  },
+  imageOptions: {
+    hideBackgroundDots: true,
+    imageSize: 0.25,
+    margin: 10,
+    crossOrigin: 'anonymous',
+    saveAsBlob: true,
+  },
+  dotsOptions: {
+    color: '#09365d',
+    type: "rounded",
+  },
+  cornersSquareOptions: {
+    color: '#09365d',
+    type: "rounded",
+  },
+  cornersDotOptions: {
+    color: '#09365d',
+    type: "rounded",
+  },
+  backgroundOptions: {
+    color: '#ffffff',
+  },
+}
 
 export default function QRGeneratorCard() {
 
-  const [QRMainOptions, setQRMainOptions] = useState({
-    width: 400,
-    height: 400,
-    type: 'svg',
-    data: 'Hello QR',
-    image: '/assets/img/R logo no outline.png',
-    margin: 20,
-    qrOptions: {
-      typeNumber: 0,
-      mode: 'Byte',
-      errorCorrectionLevel: 'H',
-    },
-    imageOptions: {
-      hideBackgroundDots: true,
-      imageSize: 0.25,
-      margin: 10,
-      crossOrigin: 'anonymous',
-      saveAsBlob: true,
-    },
-    dotsOptions: {
-      color: '#09365d',
-      type: "rounded",
-    },
-    cornersSquareOptions: {
-      color: '#09365d',
-      type: "",
-    },
-    cornersDotOptions: {
-      color: '#09365d',
-      type: "square",
-    },
-    backgroundOptions: {
-      color: '#ffffff',
-    },
-  });
+  const [QRMainOptions, setQRMainOptions] = useState(QR_DEFAULT_OPTIONS);
 
   const [QRCodeObj, setQRCodeObj] = useState();
   const QRRef = useRef(null);
@@ -63,6 +102,8 @@ export default function QRGeneratorCard() {
 
   const [withCenterImg, setWithCenterImg] = useState(true);
   const [centerImgSrc, setCenterImgSrc] = useState("/assets/img/R logo no outline.png");
+
+  const [showResetBtn, setShowResetBtn] = useState(false);
 
   const updateCenterImage = (ev) => {
     const imgFile = ev.target?.files[0];
@@ -122,6 +163,13 @@ export default function QRGeneratorCard() {
   useEffect(() => {
     try {
       QRCodeObj && QRCodeObj?.update(QRMainOptions);
+
+      // check if different to default
+      const { data: curData, ...curOpt } = QRMainOptions;
+      const { data: defData, ...defOpt } = QR_DEFAULT_OPTIONS;
+      const checkDif = JSON.stringify(curOpt) !== JSON.stringify(defOpt);
+      setShowResetBtn(checkDif);
+
     } catch (error) {
       toast.error("Error trying to generate QR Code. Please check input data or other settings");
     }
@@ -135,7 +183,7 @@ export default function QRGeneratorCard() {
   return (
     <div className="flex flex-wrap gap-4 lg:gap-8 justify-center items-start">
       <Card className="w-full max-w-md">
-        <CardHeader>
+        <CardHeader className="space-y-1 pb-5">
           <div className="flex justify-between items-center">
             <CardTitle>
               <h1 className="text-2xl font-bold">
@@ -144,11 +192,29 @@ export default function QRGeneratorCard() {
             </CardTitle>
             <ThemeToggle />
           </div>
+          <div className="flex">
+            <Button
+              size="sm"
+              variant="link"
+              className={`${showResetBtn ? "opacity-100" : "opacity-0 pointer-events-none select-none"} h-4 text-foreground/75 hover:text-foreground/90 font-light text-xs px-0 transition duration-300`}
+              onClick={() => {
+                setQRMainOptions((prevValue) => ({
+                  ...QR_DEFAULT_OPTIONS,
+                  data: prevValue.data,
+                }));
+                // reset file input
+                document.getElementById("centerImage").value = "";
+              }
+              }
+            >
+              Reset to Default
+            </Button>
+          </div>
         </CardHeader>
         <CardContent className="relative pr-0">
           <div className="absolute -top-2 left-0 bg-gradient-to-b z-[1] from-background via-90% to-transparent w-full h-6"></div>
           <div className="absolute bottom-6 left-0 bg-gradient-to-t z-[1] from-background via-10% to-transparent w-full h-6"></div>
-          <ScrollArea className="h-80 sm:h-[calc(100vh_-_53px_-_2rem_-_84px_-_24px_-_1rem)]" type="always">
+          <ScrollArea className="h-80 sm:h-[calc(100vh_-_53px_-_2rem_-_108px_-_24px_-_1rem)]" type="always">
             <form onSubmit={generateQRCode} className="pt-6 pl-2 pr-8 pb-8 space-y-6">
 
               <div className="space-y-2">
@@ -263,7 +329,7 @@ export default function QRGeneratorCard() {
                 <Separator className="shrink" />
               </div>
 
-              <div className="flex items-center gap-x-8">
+              <div className="flex flex-wrap xs:flex-nowrap items-center gap-x-8 gap-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="dotsColor">Foreground Color</Label>
                   <ColorPicker
@@ -306,6 +372,90 @@ export default function QRGeneratorCard() {
                     value={QRMainOptions.backgroundOptions.color}
                   />
                 </div>
+              </div>
+
+              <div className="flex items-center gap-x-2 w-full !mt-10">
+                <h4 className="text-muted-foreground text-xs font-medium">Shape</h4>
+                <Separator className="shrink" />
+              </div>
+
+              <div className="flex flex-wrap xs:flex-nowrap items-center justify-between gap-x-2 gap-y-3">
+                <Label className="w-full">Dots Shape</Label>
+                <Select
+                  value={QRMainOptions.dotsOptions.type}
+                  onValueChange={(val) => {
+                    setQRMainOptions((prevValue) => ({
+                      ...prevValue,
+                      dotsOptions: {
+                        ...prevValue.dotsOptions,
+                        type: val,
+                      },
+                    }));
+                  }}
+                >
+                  <SelectTrigger className="">
+                    <SelectValue placeholder="" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(DOTS_OPTIONS).map(([val, text]) => {
+                      return (
+                        <SelectItem key={val} value={val}>{text}</SelectItem>
+                      )
+                    })}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex flex-wrap xs:flex-nowrap items-center justify-between gap-x-2 gap-y-3">
+                <Label className="w-full">Corner Frame Shape</Label>
+                <Select
+                  value={QRMainOptions.cornersSquareOptions.type}
+                  onValueChange={(val) => {
+                    setQRMainOptions((prevValue) => ({
+                      ...prevValue,
+                      cornersSquareOptions: {
+                        ...prevValue.cornersSquareOptions,
+                        type: val,
+                      },
+                    }));
+                  }}
+                >
+                  <SelectTrigger className="">
+                    <SelectValue placeholder="" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(CORNER_SQUARE_OPTIONS).map(([val, text]) => {
+                      return (
+                        <SelectItem key={val} value={val}>{text}</SelectItem>
+                      )
+                    })}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex flex-wrap xs:flex-nowrap items-center justify-between gap-x-2 gap-y-3">
+                <Label className="w-full">Corner Eye Shape</Label>
+                <Select
+                  value={QRMainOptions.cornersDotOptions.type}
+                  onValueChange={(val) => {
+                    setQRMainOptions((prevValue) => ({
+                      ...prevValue,
+                      cornersDotOptions: {
+                        ...prevValue.cornersDotOptions,
+                        type: val,
+                      },
+                    }));
+                  }}
+                >
+                  <SelectTrigger className="">
+                    <SelectValue placeholder="" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(CORNER_DOT_OPTIONS).map(([val, text]) => {
+                      return (
+                        <SelectItem key={val} value={val}>{text}</SelectItem>
+                      )
+                    })}
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="flex items-center gap-x-2 w-full !mt-10">
@@ -352,7 +502,7 @@ export default function QRGeneratorCard() {
                   id="centerImage"
                   name="centerImage"
                   accept="image/*"
-                  className="p-0 file:hover:bg-accent/15 file:h-full file:mr-2 file:px-3 file:border-r file:border-r-muted-foreground file:active:border-r-muted-foreground file:active:bg-muted-foreground file:transition-colors file:duration-100"
+                  className="p-0 file:hover:bg-accent-foreground/15  file:h-full file:mr-2 file:px-3 file:border-r file:border-r-muted-foreground file:active:border-r-muted-foreground file:active:bg-muted-foreground file:transition-colors file:duration-100"
                   onChange={updateCenterImage}
                 />
               </div>
@@ -438,6 +588,38 @@ export default function QRGeneratorCard() {
                 </div>
               </div>
 
+              <div className="flex items-center gap-x-2 w-full !mt-10">
+                <h4 className="text-muted-foreground text-xs font-medium shrink-0">More QR Options</h4>
+                <Separator className="shrink" />
+              </div>
+
+              <div className="flex flex-wrap xs:flex-nowrap items-center justify-between gap-x-2 gap-y-3">
+                <Label className="w-full">QR Error Correction Mode</Label>
+                <Select
+                  value={QRMainOptions.qrOptions.errorCorrectionLevel}
+                  onValueChange={(val) => {
+                    setQRMainOptions((prevValue) => ({
+                      ...prevValue,
+                      qrOptions: {
+                        ...prevValue.qrOptions,
+                        errorCorrectionLevel: val,
+                      },
+                    }));
+                  }}
+                >
+                  <SelectTrigger className="">
+                    <SelectValue placeholder="" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(ERROR_CORRECTION_OPTIONS).map(([val, text]) => {
+                      return (
+                        <SelectItem key={val} value={val}>{text}</SelectItem>
+                      )
+                    })}
+                  </SelectContent>
+                </Select>
+              </div>
+
             </form>
           </ScrollArea>
         </CardContent>
@@ -454,11 +636,11 @@ export default function QRGeneratorCard() {
             </Skeleton>
             <div className="z-10 w-full h-full [&_svg]:w-full [&_svg]:h-full overflow-hidden rounded" ref={QRRef} />
           </div>
-          <div className="flex justify-between gap-4 w-full">
-            <Button className="w-full" onClick={() => downloadQRCode('svg')} {...QRRef.current ? {} : { disabled: "disabled" }}>
+          <div className="flex flex-col sm:flex-row justify-between gap-4 w-full">
+            <Button className="w-full h-10 sm:h-9" onClick={() => downloadQRCode('svg')} {...QRRef.current ? {} : { disabled: "disabled" }}>
               <Download className="mr-1 h-4 w-4" />Download SVG
             </Button>
-            <Button className="w-full" onClick={() => downloadQRCode('png')} {...QRRef.current ? {} : { disabled: "disabled" }}>
+            <Button className="w-full h-10 sm:h-9" onClick={() => downloadQRCode('png')} {...QRRef.current ? {} : { disabled: "disabled" }}>
               <Download className="mr-1 h-4 w-4" />Download PNG
             </Button>
           </div>

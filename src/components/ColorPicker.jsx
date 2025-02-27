@@ -11,8 +11,11 @@ import {
 } from '@/components/ui/popover';
 import { Input } from '@/components/ui/input';
 import useForwardedRef from '@/lib/useForwardedRef';
-import { Edit2Icon, EditIcon } from 'lucide-react';
-import { Label } from './ui/label';
+import { Edit2Icon } from 'lucide-react';
+
+const lightDark = (color, amount) => {
+  return '#' + color.replace(/^#/, '').replace(/../g, color => ('0' + Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substring(-2));
+}
 
 const ColorPicker = forwardRef(
   (
@@ -34,19 +37,18 @@ const ColorPicker = forwardRef(
               {...props}
               id={props.id + "-btn"}
               name={name + "-btn"}
-              className={cn(`flex items-center justify-center mr-2 bg-[var(--colorpicker-bg-color)] hover:bg-[var(--colorpicker-transbg-color)]`, className)}
+              className={cn(`flex items-center justify-center mr-2 bg-[var(--colorpicker-bg-color)] hover:bg-accent/25 text-muted dark:text-foreground hover:text-primary hover:dark:text-primary`, className)}
               onClick={() => {
                 setOpen(true);
               }}
               size='icon'
               style={{
                 "--colorpicker-bg-color": parsedValue,
-                "--colorpicker-transbg-color": parsedValue + "bf",
               }}
               variant='outline'
             >
               <span className="sr-only">Color Picker</span>
-              <Edit2Icon className="text-muted dark:text-foreground" />
+              <Edit2Icon className="" />
             </Button>
           </PopoverTrigger>
           <Input

@@ -15,7 +15,7 @@ const Footer = ({ pkgVer }) => {
       <div>
         <Button
           variant="link"
-          className={`h-max hover:opacity-75 dark:hover:opacity-100 dark:hover:no-underline dark:text-primary-foreground dark:hover:text-primary ${pathname === "/" ? "pointer-events-none opacity-50" : ""}`}
+          className={`h-max hover:opacity-75 dark:hover:opacity-100 dark:hover:no-underline dark:text-primary-foreground dark:hover:text-primary ${pathname === "/" ? "pointer-events-none underline" : ""}`}
           asChild
         >
           <Link href="/">
@@ -24,7 +24,7 @@ const Footer = ({ pkgVer }) => {
         </Button>
         <Button
           variant="link"
-          className={`h-max hover:opacity-75 dark:hover:opacity-100 dark:hover:no-underline dark:text-primary-foreground dark:hover:text-primary ${pathname === "/scan" ? "pointer-events-none opacity-50" : ""}`}
+          className={`h-max hover:opacity-75 dark:hover:opacity-100 dark:hover:no-underline dark:text-primary-foreground dark:hover:text-primary ${pathname === "/scan" ? "pointer-events-none underline" : ""}`}
           asChild
         >
           <Link href="/scan">

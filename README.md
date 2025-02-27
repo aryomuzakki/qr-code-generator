@@ -13,18 +13,23 @@ Generate QR Code
 
 - [x] Download as SVG
 - [x] Download as PNG
+- [x] Edit Background Color
 - [x] Edit Foreground/Dots Color
-- [ ] Edit Corners Frame Color
-- [ ] Edit Corners Eye Color
-- [ ] Edit Dots Shape
-- [ ] Edit Corners Frame Shape
-- [ ] Edit Corners Eye Shape
-- [ ] Add Logo Icon
-- [ ] Edit Logo Size
-- [ ] Edit Logo Margin
-- [ ] Edit QR Margin (Quiet Zone)
-- [ ] Edit Downloaded Size
-- [ ] Edit Error Correction Level
+- [ ] Edit Corners Frame Color (*Require a workaround*)
+- [ ] Edit Corners Eye Color (*Require a workaround*)
+- [x] Edit Dots Shape
+- [x] Edit Corners Frame Shape
+- [x] Edit Corners Eye Shape
+- [x] Add Logo Icon
+- [x] Edit Logo Size
+- [x] Edit Logo Margin
+- [x] Edit QR Margin (Quiet Zone)
+- [x] Edit Downloaded Size
+- [x] Edit Error Correction Level
+- [ ] Data Template:
+  - [ ] vCard
+  - [ ] Wifi
+  - [ ] Whatsapp
 
 Scan QR Code
 
