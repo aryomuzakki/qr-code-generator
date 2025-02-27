@@ -37,7 +37,8 @@ Scan QR Code
 - [x] Toggle Flashlight On/Off
 - [x] Copy Result & Open Link in New Tab if Result is a Link
 - [x] Switch Camera Rear or Front
-- [ ] Upload QR from Image File
+- [x] Upload QR Image from Native File Storage
+- [ ] Upload QR Image from URL
 
 ---
 

@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Camera, CameraOffIcon, FlashlightOff, FlashlightIcon as FlashlightOn, RotateCcw, Upload, Copy, ExternalLink, Loader2Icon } from "lucide-react"
+import { CameraOffIcon, FlashlightIcon as FlashlightOnIcon, Copy, ExternalLink, Loader2Icon, UploadIcon, CameraIcon, FlashlightOffIcon, RotateCcwIcon } from "lucide-react"
 import { Textarea } from "./ui/textarea"
 import QrScanner from "qr-scanner"
 import throttle from "lodash.throttle"
@@ -11,6 +11,7 @@ import { copyToClipboard } from "@/lib/utils"
 import { toast } from "sonner"
 import debounce from "lodash.debounce"
 import { ThemeToggle } from "./ThemeToggle"
+import { Input } from "./ui/input";
 
 
 export default function QRScannerCard() {
@@ -44,7 +45,6 @@ export default function QRScannerCard() {
 
     const handleResult = throttle(async (scanResult) => {
       setScannedResult(scanResult.data);
-      console.log("scanned", performance.now());
       toast.success("QR Scanned");
       debStopScan();
     }, 3000, { trailing: false })
@@ -144,7 +144,19 @@ export default function QRScannerCard() {
   }
 
   const uploadImage = () => {
-    console.log('Upload image...')
+    document.getElementById("qrImageFile").click();
+  }
+
+  const scanUploadedImage = (ev) => {
+    const file = ev.target.files[0];
+    QrScanner.scanImage(file, { returnDetailedScanResult: true, })
+      .then(scanResult => {
+        setScannedResult(scanResult.data);
+        toast.success("QR Scanned");
+      })
+      .catch(() => {
+        toast.error("QR Code Not Found");
+      });
   }
 
   const copyText = () => {
@@ -205,7 +217,7 @@ export default function QRScannerCard() {
                   onClick={toggleScanning}
                   title="Toggle Scanning Start/Stop"
                 >
-                  {isScanning ? <Camera className="svg" /> : <CameraOffIcon className="svg" />}
+                  {isScanning ? <CameraIcon className="svg" /> : <CameraOffIcon className="svg" />}
                 </Button>
                 <Button
                   size="icon"
@@ -214,9 +226,10 @@ export default function QRScannerCard() {
                   className="size-14 [&_svg]:size-6 rounded-full bg-secondary/30 disabled:opacity-25 hover:bg-secondary/40 backdrop-blur-[2px] text-foreground border border-foreground shadow-[0_0_10px_0px_#00000020]"
                   onClick={uploadImage}
                   title="Upload QR Code from Gallery or File"
-                  disabled
+                // disabled
                 >
-                  <Upload className="svg" />
+                  <UploadIcon className="svg" />
+                  <Input type="file" accept="image/*" name="qrImageFile" id="qrImageFile" className="hidden" hidden onChange={scanUploadedImage} />
                 </Button>
               </div>
               <div className="flex flex-col gap-4">
@@ -229,7 +242,7 @@ export default function QRScannerCard() {
                   title="Toggle Flashlight On/Off"
                   {...isFlashExist ? {} : { disabled: "disabled" }}
                 >
-                  {flashOn ? <FlashlightOn className="svg" /> : <FlashlightOff className="svg" />}
+                  {flashOn ? <FlashlightOnIcon className="svg" /> : <FlashlightOffIcon className="svg" />}
                 </Button>
                 <Button
                   size="icon"
@@ -240,7 +253,7 @@ export default function QRScannerCard() {
                   title="Switch Camera"
                   {...cameraList.length > 1 ? {} : { disabled: "disabled" }}
                 >
-                  <RotateCcw className="svg" />
+                  <RotateCcwIcon className="svg" />
                 </Button>
               </div>
 
